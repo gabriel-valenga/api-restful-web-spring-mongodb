@@ -1,6 +1,8 @@
 package com.cursonelioalves.javaspringweb.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cursonelioalves.javaspringweb.domain.User;
+import com.cursonelioalves.javaspringweb.dto.UserDTO;
 import com.cursonelioalves.javaspringweb.services.UserService;
 
 @RestController
@@ -18,9 +21,10 @@ public class UserResource {
 	UserService service;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll(String search) {
+	public ResponseEntity<List<UserDTO>> findAll(String search) {
 		List<User> userList = service.findAll();
-		return ResponseEntity.ok().body(userList);
+		List<UserDTO> listDTO = userList.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 }
