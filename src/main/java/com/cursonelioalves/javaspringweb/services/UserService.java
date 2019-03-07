@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.cursonelioalves.javaspringweb.domain.User;
+import com.cursonelioalves.javaspringweb.dto.UserDTO;
 import com.cursonelioalves.javaspringweb.repository.UserRepository;
 import com.cursonelioalves.javaspringweb.services.exceptions.ObjectNotFoundException;
 
@@ -29,4 +30,11 @@ public class UserService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+	
+	public User fromDTO(UserDTO objDTO) {
+		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
+	}
 }
