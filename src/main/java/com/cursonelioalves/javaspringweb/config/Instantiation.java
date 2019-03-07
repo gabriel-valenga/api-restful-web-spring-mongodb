@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.cursonelioalves.javaspringweb.domain.Post;
 import com.cursonelioalves.javaspringweb.domain.User;
+import com.cursonelioalves.javaspringweb.dto.AuthorDTO;
 import com.cursonelioalves.javaspringweb.repository.PostRepository;
 import com.cursonelioalves.javaspringweb.repository.UserRepository;
 
@@ -38,10 +39,11 @@ public class Instantiation implements CommandLineRunner {
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu vagem!", "Vou viajar para São Paulo", bob);
-		Post post2 = new Post(null, sdf.parse("08/06/2018"), "Bom dia!", "Bom dia a todos!", alex);
-		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
+		
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu vagem!", "Vou viajar para São Paulo", new AuthorDTO(bob));
+		Post post2 = new Post(null, sdf.parse("08/06/2018"), "Bom dia!", "Bom dia a todos!", new AuthorDTO(alex));
+				
 		postRepository.saveAll(Arrays.asList(post1, post2));
 
 	}
