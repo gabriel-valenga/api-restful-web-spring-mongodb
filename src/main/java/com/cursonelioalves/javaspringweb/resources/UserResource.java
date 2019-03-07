@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -52,5 +54,17 @@ public class UserResource {
 		service.deleteById(id);		
 		return ResponseEntity.noContent().build();
 	}
+	
+	//@RequestMapping(value="/{id, name, email}", method=RequestMethod.PUT)
+	@PutMapping(value="/{id}")
+	public ResponseEntity<Void> update( @RequestBody UserDTO objDTO, @PathVariable("id") String id) {
+		User obj = service.fromDTO(objDTO);
+		obj.setId(id);
+		System.out.println(obj.getId());
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
 
 }
